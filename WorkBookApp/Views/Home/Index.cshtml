@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@section Scripts{
+    <script type="text/javascript" src="~/Scripts/workbookApp.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#generateSheet").click(function (e) {
+                var $form = $(e.target.parentElement.parentElement);
+                e.preventDefault();
+
+                WorkbookApp.TryCreateSheet($form);
+
+            });
+
+            $("#resetWorkbook").click(function () {
+                $("#workbookPanel").addClass("hidden");
+                $("#workbookConfigForm").removeClass("hidden");
+                $("#workbookTable > tbody").remove();
+
+                $("#noOfRows").val("");
+                $("#noOfCols").val("");
+            });
+        });
+
+        
+        
+    </script>
+}
+
+<div class="jumbotron">
+    <h3>My Workbook App</h3>
+</div>
+
+<div class="container">
+    <section id="workbookConfigForm">
+        <div class="alert alert-danger" style="display:none">
+            <strong>Worksheet too big!</strong> Please column and row numbers between 0 and 25
+        </div>
+        <div class="form-group">
+            <label class="control-label">Number of rows</label>
+            <input id="noOfRows" class="form-control" type="text" required="required" title="Please enter the number (between 0 and 25) of rows your workbook should have" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Number of columns</label>
+            <input id="noOfCols" class="form-control" type="text" required="required" title="Please enter the number (between 0 and 25) of columns your workbook should have" />
+        </div>
+        <div class="form-group">
+            <input id="generateSheet" class="btn btn-default" type="button" value="Generate Sheet" />
+        </div>
+    </section>
+    <div id="workbookPanel" class="panel panel-default hidden">
+        <div class="form-group">
+            <input id="resetWorkbook" class="btn btn-default" type="button" value="Reset" />
+        </div>
+        <div class="panel-heading"><label id="worksheetName"></label></div>
+        <div class="panel-body">
+            <table id="workbookTable"></table>
+        </div>
+    </div>
+</div>
